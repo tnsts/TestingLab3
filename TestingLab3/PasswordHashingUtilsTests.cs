@@ -7,14 +7,14 @@ namespace TestingLab3
     public class PasswordHashingUtilsTests
     {
         [TestMethod]
-        public void GetHash_ExecutionRoute_0_1_2_6_7_NullStringHashTest()
+        public void GetHash_1_ExecutionRoute_10_11_12_16_17_NullStringHashTest()
         {
             string password = null;
             Assert.ThrowsException<System.ArgumentNullException>(() => PasswordHasher.GetHash(password));
         }
 
         [TestMethod]
-        public void GetHash_ExecutionRoute_0_1_2_4_5_7_NullStringHashTest()
+        public void GetHash_1_ExecutionRoute_10_11_12_14_15_17_NullStringHashTest()
         {
             string password = "password";
             string hash = PasswordHasher.GetHash(password);
@@ -24,19 +24,32 @@ namespace TestingLab3
         }
 
         [TestMethod]
-        public void GetHash_ExecutionRoute_0_1_2_3_4_5_7_OverflowExceptionCatchingTest()
+        public void GetHash_1_ExecutionRoute_10_11_12_13_14_15_17_OverflowExceptionCatchingTest()
         {
-            string password = "-4";
+            string password1 = "-4";
+            string password2 = "進撃の巨人";
+            string password3 = "🐂🌹🚒🥰";
             int hashLength = 64;
-            string hash = PasswordHasher.GetHash(password);
 
-            Assert.IsNotNull(hash);
-            Assert.AreEqual(hashLength, hash.Length);
-            Assert.AreNotEqual(hash, password);
+            string hash1 = PasswordHasher.GetHash(password1);
+            string hash2 = PasswordHasher.GetHash(password2);
+            string hash3 = PasswordHasher.GetHash(password3);
+
+            Assert.IsNotNull(hash1);
+            Assert.AreEqual(hashLength, hash1.Length);
+            Assert.AreNotEqual(hash1, password1);
+
+            Assert.IsNotNull(hash2);
+            Assert.AreEqual(hashLength, hash2.Length);
+            Assert.AreNotEqual(hash2, password2);
+
+            Assert.IsNotNull(hash3);
+            Assert.AreEqual(hashLength, hash3.Length);
+            Assert.AreNotEqual(hash3, password3);
         }
 
         [TestMethod]
-        public void Init_ExecutionRoute_0_1_2_3_CustomSaltAndCustomAdlerModeTest()
+        public void Init_11_ExecutionRoute_110_111_112_113_CustomSaltAndCustomAdlerModeTest()
         {
             string password = "password";
             string hash1 = PasswordHasher.GetHash(password, "my salt here", 15);
@@ -48,7 +61,7 @@ namespace TestingLab3
         }
 
         [TestMethod]
-        public void Init_ExecutionRoute_0_1_3_CustomSaltAndDefaultAdlerModeTest()
+        public void Init_11_ExecutionRoute_110_111_113_CustomSaltAndDefaultAdlerModeTest()
         {
             string password = "password";
             string hash1 = PasswordHasher.GetHash(password, "my salt here", 0);
@@ -60,7 +73,7 @@ namespace TestingLab3
         }
 
         [TestMethod]
-        public void Init_ExecutionRoute_0_2_3_DefaultSaltAndCustomAdlerModeTest()
+        public void Init_11_ExecutionRoute_110_112_113_DefaultSaltAndCustomAdlerModeTest()
         {
             string password = "password";
             string hash1 = PasswordHasher.GetHash(password, null, 15);
@@ -72,7 +85,7 @@ namespace TestingLab3
         }
 
         [TestMethod]
-        public void Init_ExecutionRoute_0_3_DefaultSaltAndAdlerModeTest()
+        public void Init_11_ExecutionRoute_110_113_DefaultSaltAndAdlerModeTest()
         {
             string password = "password";
             string hash1 = PasswordHasher.GetHash(password, null, 0);
